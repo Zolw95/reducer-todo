@@ -1,9 +1,8 @@
-import React, { useState, useContext } from "react";
-import TodoContext from "../../context/todo/todoContext";
+import React, { useState } from "react";
+//import TodoContext from "../../context/todo/todoContext";
 
-const TodoForm = () => {
-  const todoContext = useContext(TodoContext);
-  const { addTodo } = todoContext;
+const TodoForm = ({ dispatch }) => {
+  //const todoContext = useContext(TodoContext);
 
   const [todo, setTodo] = useState({
     name: "",
@@ -11,28 +10,31 @@ const TodoForm = () => {
     completed: false,
   });
 
+  //console.log("todoform", todo);
+
   const { name } = todo;
 
   // Handle Form onChange
   const onChange = (e) => {
     e.preventDefault();
-    setTodo({ ...todo, [e.target.name]: e.target.value });
+    //setTodo({ [e.target.name]: e.target.value });
+    setTodo(e.target.value);
   };
 
   // Add Todo Item to List
   const onSubmit = (e) => {
     e.preventDefault();
-    addTodo(todo);
-    setTodo({
-      name: "",
-      id: "",
-      completed: false,
-    });
+    //todoContext.addTodo(todo);
+    // setTodo({
+    //   name: "",
+    //   id: "",
+    //   completed: false,
+    // });
+    setTodo("");
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <h2>Todo List</h2>
       <input
         type="text"
         placeholder="Add Item"
@@ -46,6 +48,9 @@ const TodoForm = () => {
           type="submit"
           value="Add Todo Item"
           className="btn btn-primary btn-block"
+          onClick={() => {
+            dispatch({ type: "ADD_TODO", payload: todo });
+          }}
         />
       </div>
     </form>

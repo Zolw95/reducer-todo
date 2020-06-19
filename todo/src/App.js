@@ -1,19 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useReducer } from "react";
+import { initialState, todoReducer } from "./context/todo/todoReducer";
 import Navbar from "./components/layout/Navbar";
-import TodoState from "./context/todo/TodoState";
-import Todos from "./components/layout/Todos";
-import "./App.css";
 import TodoForm from "./components/layout/TodoForm";
+import Todos from "./components/layout/Todos";
+//import TodoState from "./context/todo/TodoState";
+
+import "./App.css";
 
 const App = () => {
+  const [state, dispatch] = useReducer(todoReducer, initialState);
+
   return (
-    <TodoState>
-      <Fragment>
-        <Navbar />
-        <TodoForm />
-        <Todos />
-      </Fragment>
-    </TodoState>
+    //<TodoState>
+    <Fragment>
+      <Navbar />
+      <TodoForm dispatch={dispatch} />
+      <Todos state={state} dispatch={dispatch} />
+    </Fragment>
+    //</TodoState>
   );
 };
 

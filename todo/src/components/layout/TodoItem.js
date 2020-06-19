@@ -1,29 +1,34 @@
-import React, { useContext } from "react";
-import TodoContext from "../../context/todo/todoContext";
+import React, { useReducer } from "react";
+import { todoReducer, initialState } from "../../context/todo/todoReducer";
+//import TodoContext from "../../context/todo/todoContext";
 
-const TodoItem = ({ todo }) => {
-  const todoContext = useContext(TodoContext);
+const TodoItem = () => {
+  const [state, dispatch] = useReducer(todoReducer, initialState);
 
-  const { toggleTodo } = todoContext;
+  // const todoContext = useContext(TodoContext);
 
-  const { id, name, completed } = todo;
+  // const { toggleTodo } = todoContext;
 
-  //Get ID of Todo Item
-  const handleClick = (e) => {
-    toggleTodo(id);
-  };
+  //const { id, name, completed } = todo;
+
+  // //Get ID of Todo Item
+  // const handleClick = (e) => {
+  //   toggleTodo(id);
+  // };
+
+  // console.log("todoitem", todo);
 
   return (
     <div className="card bg-light">
       <h3 className="text-primary text-left">
         <span
           className={`badge ${
-            completed ? " badge-primary linethrough" : "badge-success"
+            state.completed ? " badge-primary linethrough" : "badge-success"
           }`}
-          onClick={handleClick}
+          onClick={() => dispatch({ type: "TOGGLE_TODO" })}
         >
           {" "}
-          {name}
+          {state.initialState}
         </span>
       </h3>
     </div>
